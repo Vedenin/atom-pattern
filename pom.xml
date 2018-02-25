@@ -1,9 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <groupId>com.github.vedenin</groupId>
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>atomical-programming</artifactId>
-    <version>1.0-SNAPSHOT</version>
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <packaging>pom</packaging>
+  <groupId>com.github.vedenin.atoms</groupId>
+  <artifactId>root</artifactId>
+  <version>1.0</version>
+  <name>Main</name>
+  <description>Library providing annotation for Atom pattern</description>
+  <url>https://github.com/Vedenin/atom-pattern</url>
+
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <url>https://github.com/Vedenin/atom-pattern</url>
+    <connection>scm:hg:https://github.com/Vedenin/atom-pattern</connection>
+    <developerConnection>scm:hg:https://github.com/Vedenin/atom-pattern</developerConnection>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>owner</id>
+      <name>Viacheslav Vedenin</name>
+      <email>vedenin1980@gmail.com</email>
+      <timezone>UTC+1</timezone>
+    </developer>
+  </developers>
+
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <modules>
+    <module>atom-annotations</module>
+  </modules>
 </project>
