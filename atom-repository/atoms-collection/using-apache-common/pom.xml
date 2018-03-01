@@ -6,12 +6,12 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.vedenin.atoms</groupId>
-    <artifactId>annotations</artifactId>
+    <artifactId>collections</artifactId>
     <packaging>jar</packaging>
 
-    <version>1.1</version>
-    <name>Atom annotations</name>
-    <description>Library providing annotation for Atom pattern</description>
+    <version>1.0-apache-common</version>
+    <name>Atom collection using apache common</name>
+    <description>Project provide implementation of Atom pattern for collection (Map, Set, List, MultiMap)</description>
     <url>https://github.com/Vedenin/atom-pattern</url>
 
     <parent>
@@ -53,6 +53,20 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.vedenin.atoms</groupId>
+            <artifactId>annotations</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.1</version>
+        </dependency>
+    </dependencies>
 
     <build>
 
