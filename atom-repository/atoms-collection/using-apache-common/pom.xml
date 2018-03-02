@@ -9,8 +9,8 @@
     <artifactId>collections</artifactId>
     <packaging>jar</packaging>
 
-    <version>1.0-apache-common</version>
-    <name>Atom collection using apache common</name>
+    <version>0.1-apache-common-draft</version>
+    <name>Collection [apache]</name>
     <description>Project provide implementation of Atom pattern for collection (Map, Set, List, MultiMap)</description>
     <url>https://github.com/Vedenin/atom-pattern</url>
 
@@ -59,8 +59,8 @@
             <groupId>com.github.vedenin.atoms</groupId>
             <artifactId>annotations</artifactId>
             <version>1.0</version>
+            <scope>provided</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>

@@ -6,12 +6,12 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.vedenin.atoms</groupId>
-    <artifactId>collections</artifactId>
+    <artifactId>atoms-htmlparser</artifactId>
     <packaging>jar</packaging>
 
-    <version>0.1-guava-draft</version>
-    <name>Collection [guava]</name>
-    <description>Project provide implementation of Atom pattern for collection (Map, Set, List, MultiMap)</description>
+    <version>0.1-jsoup-draft</version>
+    <name>Html parser [jsoup]</name>
+    <description>Project provide implementation of Atom pattern for html parser using jsop</description>
     <url>https://github.com/Vedenin/atom-pattern</url>
 
     <parent>
@@ -62,9 +62,21 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>24.0-jre</version>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.11.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.vedenin.atoms</groupId>
+            <artifactId>collections</artifactId>
+            <version>0.1-guava-draft</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.vedenin.atoms</groupId>
+            <artifactId>atoms-io</artifactId>
+            <version>0.1-default-draft</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

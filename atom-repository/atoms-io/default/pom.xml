@@ -6,12 +6,12 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.vedenin.atoms</groupId>
-    <artifactId>collections</artifactId>
+    <artifactId>atoms-io</artifactId>
     <packaging>jar</packaging>
 
-    <version>0.1-guava-draft</version>
-    <name>Collection [guava]</name>
-    <description>Project provide implementation of Atom pattern for collection (Map, Set, List, MultiMap)</description>
+    <version>0.1-default-draft</version>
+    <name>IO [default]</name>
+    <description>Project provide implementation of Atom pattern for io (File, Resource and so on)</description>
     <url>https://github.com/Vedenin/atom-pattern</url>
 
     <parent>
@@ -56,15 +56,28 @@
 
     <dependencies>
         <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.github.vedenin.atoms</groupId>
             <artifactId>annotations</artifactId>
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>24.0-jre</version>
+            <groupId>com.github.vedenin.atoms</groupId>
+            <artifactId>collections</artifactId>
+            <version>0.1-guava-draft</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.vedenin.atoms</groupId>
+            <artifactId>atoms-strings</artifactId>
+            <version>0.1-default-draft</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
