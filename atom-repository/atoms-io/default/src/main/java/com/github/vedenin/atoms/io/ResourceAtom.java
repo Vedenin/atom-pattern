@@ -9,9 +9,9 @@ import com.github.vedenin.atoms.collections.SetAtom;
 import com.github.vedenin.atoms.io.exceptions.ResourceAtomException;
 import com.github.vedenin.atoms.strings.StringUtilsAtom;
 
+import javax.inject.Inject;
 import java.io.InputStream;
 
-import static com.github.vedenin.atoms.io.FileAndIOUtilsAtom.*;
 import static java.util.stream.Collectors.toMap;
 
 
@@ -23,9 +23,14 @@ import static java.util.stream.Collectors.toMap;
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class ResourceAtom {
     private final Class<?> thisClass;
+    private final FileAndIOUtilsAtom fileAndIOUtilsAtom;
+    private final StringUtilsAtom stringUtilsAtom;
 
-    private ResourceAtom() {
-        thisClass = this.getClass();
+    @Inject
+    public ResourceAtom(FileAndIOUtilsAtom fileAndIOUtilsAtom, StringUtilsAtom stringUtilsAtom) {
+        this.thisClass = this.getClass();
+        this.fileAndIOUtilsAtom = fileAndIOUtilsAtom;
+        this.stringUtilsAtom = stringUtilsAtom;
     }
 
     /**
@@ -35,7 +40,7 @@ public class ResourceAtom {
      * @return list from config file
      */
     public ListAtom<String> getListFromConfig(String name) {
-        return StringUtilsAtom.split(getResourceAsString(name).replaceAll("\r", ""), "\n").
+        return stringUtilsAtom.split(getResourceAsString(name).replaceAll("\r", ""), "\n").
                 stream().map(String::trim).collect(ListAtom.getCollector());
     }
 
@@ -46,7 +51,7 @@ public class ResourceAtom {
      * @return list from file
      */
     public ListAtom<String> getListFromFile(String name) {
-        return readLines(FileAtom.create(name));
+        return fileAndIOUtilsAtom.readLines(FileAtom.create(name));
     }
 
     /**
@@ -57,7 +62,7 @@ public class ResourceAtom {
      */
     public MapAtom<String, String> getMapFromConfig(String name) {
         return MapAtom.getAtom(
-                StringUtilsAtom.split(getResourceAsString(name).replaceAll("\r", ""),
+                stringUtilsAtom.split(getResourceAsString(name).replaceAll("\r", ""),
                         "\n").stream().map((s) -> s.split(" := "))
                         .collect(toMap((s) -> s[0], (s) -> s[1])));
     }
@@ -70,7 +75,7 @@ public class ResourceAtom {
      */
     public String getResourceAsString(String name) {
         try {
-            return readIOtoString(getResourceAsStream(name));
+            return fileAndIOUtilsAtom.inputStreamToString(getResourceAsStream(name));
         } catch (Exception e) {
             throw new ResourceAtomException("Problem during open resource: " + name, e);
         }
@@ -111,7 +116,7 @@ public class ResourceAtom {
      */
     public ListAtom<String> getFiles(String dirPath) {
         FileAtom dir = getDir(dirPath);
-        return listFiles(dir).stream().map(FileAtom::getPath).collect(ListAtom.getCollector());
+        return fileAndIOUtilsAtom.listFiles(dir).stream().map(FileAtom::getPath).collect(ListAtom.getCollector());
     }
 
     /**
@@ -153,7 +158,7 @@ public class ResourceAtom {
         }
         FileAtom file = FileAtom.create(dir.getPath() + "/" + fileName);
         if (file.createNewFile()) {
-            writeStringToFile(file, text);
+            fileAndIOUtilsAtom.writeStringToFile(file, text);
         }
     }
 
@@ -174,19 +179,19 @@ public class ResourceAtom {
      * @param name - path and name of file
      * @return String from this file
      */
-    public static String getFileAsString(String name) {
+    public  String getFileAsString(String name) {
         try {
-            return readFileToString(FileAtom.create(name));
+            return fileAndIOUtilsAtom.readFileToString(FileAtom.create(name));
         } catch (Exception e) {
             throw new ResourceAtomException("Problem during open file: " + name, e);
         }
     }
 
-    public static String getNameFromResource(String name, String dir) {
+    public String getNameFromResource(String name, String dir) {
         return name.replace(dir, "").replace("\\", "").replace("/", "").split("_")[0];
     }
 
-    public static String getNameFromResource(String name) {
+    public String getNameFromResource(String name) {
         String tmp = name.replace("\\", "/");
         return tmp.substring(tmp.lastIndexOf("/") + 1);
     }
@@ -209,8 +214,12 @@ public class ResourceAtom {
 
     // -------------- Just boilerplate code for Atom -----------------
     @BoilerPlate
-    public static ResourceAtom create() {
-        return new ResourceAtom();
+    public static ResourceAtom create(FileAndIOUtilsAtom fileAndIOUtilsAtom, StringUtilsAtom stringUtilsAtom) {
+        return new ResourceAtom(fileAndIOUtilsAtom, stringUtilsAtom);
     }
 
+    @BoilerPlate
+    public static ResourceAtom create() {
+        return new ResourceAtom(FileAndIOUtilsAtom.create(), StringUtilsAtom.create());
+    }
 }

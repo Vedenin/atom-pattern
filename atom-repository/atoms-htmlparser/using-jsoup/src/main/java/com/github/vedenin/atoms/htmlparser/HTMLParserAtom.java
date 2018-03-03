@@ -4,7 +4,6 @@ import com.github.vedenin.atom.annotations.AtomException;
 import com.github.vedenin.atom.annotations.AtomUtils;
 import com.github.vedenin.atom.annotations.Molecule;
 import com.github.vedenin.atoms.htmlparser.exceptions.HTMPParserAtomException;
-import com.github.vedenin.atoms.io.FileAtom;
 import com.google.common.base.Charsets;
 import org.jsoup.Jsoup;
 
@@ -17,19 +16,11 @@ import java.io.IOException;
  * Created by Slava Vedenin on 12/16/2016.
  */
 @AtomUtils(HTMLParserAtom.class)
-@Molecule({DocumentAtom.class, FileAtom.class})
+@Molecule({DocumentAtom.class})
 @AtomException(HTMPParserAtomException.class)
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class HTMLParserAtom {
     private static String CHARSET_NAME = Charsets.UTF_8.name();
-
-    public static DocumentAtom parseFile(FileAtom file)  {
-        try {
-            return DocumentAtom.getAtom(Jsoup.parse(file.getOriginal(), CHARSET_NAME));
-        } catch (IOException exp) {
-            throw new HTMPParserAtomException(exp);
-        }
-    }
 
     public static DocumentAtom parseString(String text)  {
         try {

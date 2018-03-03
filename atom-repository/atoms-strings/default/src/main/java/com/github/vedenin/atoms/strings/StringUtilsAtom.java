@@ -2,6 +2,7 @@ package com.github.vedenin.atoms.strings;
 
 import com.github.vedenin.atom.annotations.AtomTest;
 import com.github.vedenin.atom.annotations.AtomUtils;
+import com.github.vedenin.atom.annotations.BoilerPlate;
 import com.github.vedenin.atoms.collections.ListAtom;
 import com.github.vedenin.atoms.collections.SetAtom;
 import org.apache.commons.lang3.StringUtils;
@@ -17,24 +18,24 @@ import org.apache.commons.lang3.StringUtils;
 @AtomTest("StringUtilsAtomTest")
 public class StringUtilsAtom {
 
-    public static String substringBeforeLast(String str, String separator) {
+    public String substringBeforeLast(String str, String separator) {
         return StringUtils.substringBeforeLast(str, separator);
     }
 
-    public static String substringBefore(String str, String separator) {
+    public String substringBefore(String str, String separator) {
         return StringUtils.substringBefore(str, separator);
     }
 
 
-    public static String substringAfterLast(String str, String separator) {
+    public String substringAfterLast(String str, String separator) {
         return StringUtils.substringAfterLast(str, separator);
     }
 
-    public static ListAtom<String> split(String str, String separatorChars) {
+    public ListAtom<String> split(String str, String separatorChars) {
         return ListAtom.create(StringUtils.split(str, separatorChars));
     }
 
-    public static String getLongestSubstring(SetAtom<String> set) {
+    public String getLongestSubstring(SetAtom<String> set) {
         String presious = null;
         String result = null;
         for(String str: set) {
@@ -58,7 +59,7 @@ public class StringUtilsAtom {
         return result;
     }
 
-    public static String getLongestSubstring(String string1, String string2) {
+    public String getLongestSubstring(String string1, String string2) {
         if (string1 == null || string2 == null || string1.length() == 0 || string2.length() == 0) {
             return "";
         }
@@ -89,5 +90,11 @@ public class StringUtilsAtom {
             }
         }
         return string1.substring(maxI - maxLength + 1, maxI + 1);
+    }
+
+    // -------------- Just boilerplate code for Atom -----------------
+    @BoilerPlate
+    public static StringUtilsAtom create() {
+        return new StringUtilsAtom();
     }
 }

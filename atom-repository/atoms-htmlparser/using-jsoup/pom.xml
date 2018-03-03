@@ -72,12 +72,6 @@
             <version>0.1-guava-draft</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.github.vedenin.atoms</groupId>
-            <artifactId>atoms-io</artifactId>
-            <version>0.1-default-draft</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 
     <build>
