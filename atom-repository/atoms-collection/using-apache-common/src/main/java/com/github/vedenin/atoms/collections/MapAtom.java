@@ -32,42 +32,42 @@ import java.util.stream.Stream;
 @Molecule({SetAtom.class, ListAtom.class})
 @AtomException(CollectionAtomException.class)
 public class MapAtom<K, V> implements Iterable<MapAtom.Entry<K,V>> {
-    private final Map<K, V> map;
+    private final Map<K, V> original;
 
     public SetAtom<K> keySet() {
-        return SetAtom.getAtom(map.keySet());
+        return SetAtom.getAtom(original.keySet());
     }
 
     public V get(K key) {
-        return map.get(key);
+        return original.get(key);
     }
 
     public void set(K key, V value) {
-        map.put(key, value);
+        original.put(key, value);
     }
 
     public void put(K key, V value) {
-        map.put(key, value);
+        original.put(key, value);
     }
 
     public int size() {
-        return map.size();
+        return original.size();
     }
 
     public ListAtom<V> values() {
-        return ListAtom.create(map.values());
+        return ListAtom.create(original.values());
     }
 
     public boolean containsKey(K key) {
-        return map.containsKey(key);
+        return original.containsKey(key);
     }
 
     public void putAll(MapAtom<K, V> mapAtom) {
-        map.putAll(mapAtom.getOriginal());
+        original.putAll(mapAtom.getOriginal());
     }
 
     public boolean isEmpty() {
-        return map.isEmpty();
+        return original.isEmpty();
     }
 
     private static <T> BinaryOperator<T> throwingMerger() {
@@ -75,13 +75,13 @@ public class MapAtom<K, V> implements Iterable<MapAtom.Entry<K,V>> {
     }
 
     public void forEach(BiConsumer<? super K, ? super V> action) {
-        map.forEach(action);
+        original.forEach(action);
     }
 
     @Override
     public Iterator<Entry<K, V>> iterator() {
         return new Iterator<Entry<K, V>>() {
-            private Iterator<Map.Entry<K, V>> iterator = map.entrySet().iterator();
+            private Iterator<Map.Entry<K, V>> iterator = original.entrySet().iterator();
             @Override
             public boolean hasNext() {
                 return iterator.hasNext();
@@ -157,7 +157,7 @@ public class MapAtom<K, V> implements Iterable<MapAtom.Entry<K,V>> {
     }
 
     public Stream<Entry<K, V>> stream() {
-        return map.entrySet().stream().map(Entry::new);
+        return original.entrySet().stream().map(Entry::new);
     }
 
     // Just boilerplate code for Atom
@@ -168,17 +168,17 @@ public class MapAtom<K, V> implements Iterable<MapAtom.Entry<K,V>> {
 
     @BoilerPlate
     private MapAtom() {
-        this.map = new HashMap<>();
+        this.original = new HashMap<>();
     }
 
     @BoilerPlate
     private MapAtom(int size) {
-        this.map = new HashMap<>(size);
+        this.original = new HashMap<>(size);
     }
 
     @BoilerPlate
-    private MapAtom(Map<K, V> map) {
-        this.map = map;
+    private MapAtom(Map<K, V> original) {
+        this.original = original;
     }
 
     @BoilerPlate
@@ -208,7 +208,7 @@ public class MapAtom<K, V> implements Iterable<MapAtom.Entry<K,V>> {
 
     @BoilerPlate
     private Map<K,V> getOriginal() {
-        return map;
+        return original;
     }
 
     @BoilerPlate

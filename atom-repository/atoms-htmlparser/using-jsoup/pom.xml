@@ -43,7 +43,7 @@
         </developer>
     </developers>
     <properties>
-        <!-- Convenience property to set the GWT version -->
+        <!-- Convenience property to original the GWT version -->
         <gwt.version>2.8.2</gwt.version>
 
         <!-- GWT 2.8 requires 1.8 -->

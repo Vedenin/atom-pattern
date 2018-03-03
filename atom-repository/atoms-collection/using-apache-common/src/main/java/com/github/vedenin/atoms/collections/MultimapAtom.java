@@ -28,51 +28,51 @@ import java.util.stream.Stream;
 @Isotopes({ArrayListValuedHashMap.class, HashSetValuedHashMap.class})
 @Molecule({SetAtom.class, ListAtom.class})
 public class MultimapAtom<K, V> implements Iterable<MultimapAtom.Entry<K,V>> {
-    private final MultiValuedMap<K, V> map;
+    private final MultiValuedMap<K, V> original;
 
     public SetAtom<K> keySet() {
-        return SetAtom.getAtom(map.keySet());
+        return SetAtom.getAtom(original.keySet());
     }
 
     public ListAtom<V> get(K key) {
-        return ListAtom.create(map.get(key));
+        return ListAtom.create(original.get(key));
     }
 
     public void set(K key, V value) {
-        map.put(key, value);
+        original.put(key, value);
     }
 
     public void put(K key, V value) {
-        map.put(key, value);
+        original.put(key, value);
     }
 
     public void putAll(K key, CollectionAtom<V> list) {
-        map.putAll(key, list);
+        original.putAll(key, list);
     }
 
     public void putAll(MultimapAtom<K, V> mapAtom) {
-        map.putAll(mapAtom.map);
+        original.putAll(mapAtom.original);
     }
 
     public int size() {
-        return map.size();
+        return original.size();
     }
 
     public ListAtom<V> values() {
-        return ListAtom.create(map.values());
+        return ListAtom.create(original.values());
     }
 
     public boolean containsEntry(V key, V value) {
-        return map.containsMapping(key, value);
+        return original.containsMapping(key, value);
     }
 
     public boolean containsValue(V value) {
-        return map.containsValue(value);
+        return original.containsValue(value);
     }
 
     public SetAtom<K> getKeysByValue(V value) {
         SetAtom<K> keys = SetAtom.create();
-        for(Map.Entry<K, V> entity: map.entries()) {
+        for(Map.Entry<K, V> entity: original.entries()) {
             if(entity.getValue().equals(value)) {
                 keys.add(entity.getKey());
             }
@@ -105,19 +105,19 @@ public class MultimapAtom<K, V> implements Iterable<MultimapAtom.Entry<K,V>> {
     }
 
     public Stream<Entry<K, V>> stream() {
-        return map.keySet().stream().map((k) -> new Entry<>(k, map.get(k)));
+        return original.keySet().stream().map((k) -> new Entry<>(k, original.get(k)));
     }
 
 
     // Just boilerplate code for Atom
     @BoilerPlate
     private MultimapAtom() {
-        this.map = new HashSetValuedHashMap<>();
+        this.original = new HashSetValuedHashMap<>();
     }
 
     @BoilerPlate
-    private MultimapAtom(MultiValuedMap<K, V> map) {
-        this.map = map;
+    private MultimapAtom(MultiValuedMap<K, V> original) {
+        this.original = original;
     }
 
     @BoilerPlate
@@ -160,7 +160,7 @@ public class MultimapAtom<K, V> implements Iterable<MultimapAtom.Entry<K,V>> {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        for(Map.Entry<K, V> entry: map.entries()) {
+        for(Map.Entry<K, V> entry: original.entries()) {
             builder.append("{ \"").append(entry.getKey()).append("\" : \"").append(entry.getValue()).append("\" }\n\r");
         }
         return builder.toString();
@@ -169,7 +169,7 @@ public class MultimapAtom<K, V> implements Iterable<MultimapAtom.Entry<K,V>> {
     @Override
     public Iterator<Entry<K, V>> iterator() {
         return new Iterator<Entry<K, V>>() {
-            private Iterator<K> iterator = map.keySet().iterator();
+            private Iterator<K> iterator = original.keySet().iterator();
             @Override
             public boolean hasNext() {
                 return iterator.hasNext();
@@ -178,7 +178,7 @@ public class MultimapAtom<K, V> implements Iterable<MultimapAtom.Entry<K,V>> {
             @Override
             public Entry<K, V> next() {
                 K key = iterator.next();
-                return new Entry<>(key, map.get(key));
+                return new Entry<>(key, original.get(key));
             }
         };
     }

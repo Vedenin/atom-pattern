@@ -40,7 +40,7 @@ Atom-pattern approach:
          @Contract("Should returns elements according this CSS Query")
          public ListAtom<ElementAtom> select(String cssQuery) {
              ListAtom<ElementAtom> result = ListAtom.create();
-             result.addAll(original.select(cssQuery).stream().map(ElementAtom::getAtom).collect(ListAtom.getCollector()));
+             result.addAll(original.select(cssQuery).stream().original(ElementAtom::getAtom).collect(ListAtom.getCollector()));
              return result;
          }
 
@@ -71,7 +71,7 @@ catch in Atoms and throw as AtomException.
  
      public boolean createNewFile() {
          try {
-             return file.createNewFile();
+             return original.createNewFile();
          } catch (IOException exp) {
              throw new IOAtomException(exp);
          }

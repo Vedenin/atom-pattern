@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.net.URI;
 
 /**
- * Atom to proxy working with file
+ * Atom to proxy working with original
  *
  * Created by vvedenin on 4/19/2017.
  */
@@ -18,43 +18,43 @@ import java.net.URI;
 @AtomException(IOAtomException.class)
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class FileAtom {
-    private final File file;
+    private final File original;
 
     public boolean isExists() {
-        return file.exists();
+        return original.exists();
     }
 
     public void createDir() {
-        boolean flag = file.mkdirs();
+        boolean flag = original.mkdirs();
         if(!flag) {
-            throw new IOAtomException("Can't create dir with name " + file.getPath() + " " + file.getName());
+            throw new IOAtomException("Can't create dir with name " + original.getPath() + " " + original.getName());
         }
     }
 
     public String getPath() {
-        return file.getPath();
+        return original.getPath();
     }
 
     public boolean createNewFile() {
         try {
-            return file.createNewFile();
+            return original.createNewFile();
         } catch (IOException exp) {
             throw new IOAtomException(exp);
         }
     }
 
     public String getAbsolutePath() {
-        return file.getAbsolutePath();
+        return original.getAbsolutePath();
     }
 
     // Just boilerplate code for Atom
     @BoilerPlate
-    private FileAtom(File file) {
-        this.file = file;
+    private FileAtom(File original) {
+        this.original = original;
     }
     @BoilerPlate
     public File getOriginal() {
-        return file;
+        return original;
     }
 
     @BoilerPlate

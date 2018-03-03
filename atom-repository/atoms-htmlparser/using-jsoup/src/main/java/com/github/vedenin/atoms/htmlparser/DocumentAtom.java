@@ -20,45 +20,45 @@ import org.jsoup.select.Elements;
 @Contract("Provide information about HTML pages")
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class DocumentAtom {
-    private final Document document;
+    private final Document original;
 
     @Contract("Should returns elements according this CSS Query")
     public ListAtom<ElementAtom> select(String cssQuery) {
         ListAtom<ElementAtom> result = ListAtom.create();
-        result.addAll(document.select(cssQuery).stream().map(ElementAtom::getAtom).collect(ListAtom.getCollector()));
+        result.addAll(original.select(cssQuery).stream().map(ElementAtom::getAtom).collect(ListAtom.getCollector()));
         return result;
     }
 
     @Contract("Should returns text from elements according this CSS Query")
     public String selectText(String cssQuery) {
-        return document.select(cssQuery).text();
+        return original.select(cssQuery).text();
     }
 
     @Contract("Should returns text from html without any tags")
     public String getText() {
-        return document.text();
+        return original.text();
     }
 
     @Contract("Should returns base url for this html")
     public String getBaseUrl() {
-        return document.baseUri();
+        return original.baseUri();
     }
 
-    @Contract("Should resturn all elements for this document")
+    @Contract("Should resturn all elements for this original")
     public ListAtom<ElementAtom> getElements() {
         ListAtom<ElementAtom> result = ListAtom.create();
-        result.addAll(document.children().stream().map(ElementAtom::getAtom).collect(ListAtom.getCollector()));
+        result.addAll(original.children().stream().map(ElementAtom::getAtom).collect(ListAtom.getCollector()));
         return result;
     }
 
     @Contract("Should return html without changing")
     public String getHtml() {
-        return document.html();
+        return original.html();
     }
 
     public ListAtom<ElementAtom> getAllElements() {
         ListAtom<ElementAtom> result = ListAtom.create();
-        addAllElementToSet(result, document.children());
+        addAllElementToSet(result, original.children());
         return result;
     }
 
@@ -71,8 +71,8 @@ public class DocumentAtom {
 
     // -------------- Just boilerplate code for Atom -----------------
     @BoilerPlate
-    private DocumentAtom(Document document) {
-        this.document = document;
+    private DocumentAtom(Document original) {
+        this.original = original;
     }
 
     @BoilerPlate

@@ -18,27 +18,27 @@ import org.jsoup.nodes.Element;
 @Molecule({ElementAtom.class, TagAtom.class, DocumentAtom.class, ListAtom.class})
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class ElementAtom {
-    private final Element element;
+    private final Element original;
 
     public String getText() {
-        return element.text();
+        return original.text();
     }
 
     public TagAtom getTag() {
-        return TagAtom.getAtom(element.tag());
+        return TagAtom.getAtom(original.tag());
     }
 
     public SetAtom<String> getClassNames() {
-        return SetAtom.getAtom(element.classNames());
+        return SetAtom.getAtom(original.classNames());
     }
 
     public String getAttr(String name) {
-        return element.attr(name);
+        return original.attr(name);
     }
 
     public SetAtom<String> getAttributes() {
         SetAtom<String> result = SetAtom.create();
-        for(Attribute attribute: element.attributes()) {
+        for(Attribute attribute: original.attributes()) {
             result.add(attribute.getKey());
         }
         return result;
@@ -50,50 +50,50 @@ public class ElementAtom {
      */
     public SetAtom<String> getTagAndAttributes() {
         SetAtom<String> result = SetAtom.create();
-        for(Attribute attribute: element.attributes()) {
-            result.add(element.tag() + "[" + attribute.getKey() + "]");
+        for(Attribute attribute: original.attributes()) {
+            result.add(original.tag() + "[" + attribute.getKey() + "]");
         }
         return result;
     }
 
     public SetAtom<String> getTagAttributeAndValues() {
         SetAtom<String> result = SetAtom.create();
-        for(Attribute attribute: element.attributes()) {
-            result.add(element.tag() + "[" + attribute.getKey() + "="+ attribute.getValue() + "]");
+        for(Attribute attribute: original.attributes()) {
+            result.add(original.tag() + "[" + attribute.getKey() + "="+ attribute.getValue() + "]");
         }
         return result;
     }
 
     public String getId() {
-        return element.id();
+        return original.id();
     }
 
     public String getOwnText() {
-        return element.ownText();
+        return original.ownText();
     }
 
     public ListAtom<ElementAtom> getChild() {
-        return element.children().stream().map(ElementAtom::getAtom).collect(ListAtom.getCollector());
+        return original.children().stream().map(ElementAtom::getAtom).collect(ListAtom.getCollector());
     }
 
     public ListAtom<ElementAtom> getAllParent() {
-        return element.parents().stream().map(ElementAtom::getAtom).collect(ListAtom.getCollector());
+        return original.parents().stream().map(ElementAtom::getAtom).collect(ListAtom.getCollector());
     }
 
     @Override
     public boolean equals(Object o) {
-        return o instanceof ElementAtom && element.equals(((ElementAtom) o).element);
+        return o instanceof ElementAtom && original.equals(((ElementAtom) o).original);
     }
 
     @Override
     public int hashCode() {
-        return element != null ? element.hashCode() : 0;
+        return original != null ? original.hashCode() : 0;
     }
 
     // Just boilerplate code for Atom
     @BoilerPlate
-    private ElementAtom(Element element) {
-        this.element = element;
+    private ElementAtom(Element original) {
+        this.original = original;
     }
 
     @BoilerPlate

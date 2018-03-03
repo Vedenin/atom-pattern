@@ -19,7 +19,7 @@ import static com.github.vedenin.atoms.collections.MultimapAtom.Entry.entity;
 @Molecule({ElementAtom.class})
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class TagAtom {
-    private final Tag tag;
+    private final Tag original;
 
     public static TagAtom valueOf(String tagString) {
         return new TagAtom(Tag.valueOf(tagString));
@@ -48,11 +48,11 @@ public class TagAtom {
     );
 
     public Boolean isKnownTag() {
-        return KNOWN_TAGS.containsValue(tag.getName());
+        return KNOWN_TAGS.containsValue(original.getName());
     }
 
     public SetAtom<String> getCategory() {
-        return KNOWN_TAGS.getKeysByValue(tag.getName());
+        return KNOWN_TAGS.getKeysByValue(original.getName());
     }
 
     // Just boilerplate code for Atom
@@ -64,19 +64,19 @@ public class TagAtom {
 
         TagAtom tagAtom = (TagAtom) o;
 
-        return !(tag != null ? !tag.equals(tagAtom.tag) : tagAtom.tag != null);
+        return !(original != null ? !original.equals(tagAtom.original) : tagAtom.original != null);
 
     }
 
     @Override
     @BoilerPlate
     public int hashCode() {
-        return tag != null ? tag.hashCode() : 0;
+        return original != null ? original.hashCode() : 0;
     }
 
     @BoilerPlate
-    private TagAtom(Tag tag) {
-        this.tag = tag;
+    private TagAtom(Tag original) {
+        this.original = original;
     }
 
     @BoilerPlate
@@ -86,6 +86,6 @@ public class TagAtom {
 
     @Override
     public String toString() {
-        return tag.getName();
+        return original.getName();
     }
 }

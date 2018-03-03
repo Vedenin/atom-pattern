@@ -22,58 +22,58 @@ import java.util.stream.Stream;
  *
  * Created by Slava Vedenin on 12/16/2016.
  */
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "unused", "unchecked"})
 @Atom({ArrayList.class, List.class})
 @Molecule({MultimapAtom.class, MultisetAtom.class, SetAtom.class})
 public class ListAtom<K> implements CollectionAtom<K> {
-    private final List<K> list;
+    private final List<K> original;
 
     @Override
     public Iterator<K> iterator() {
-        return list.iterator();
+        return original.iterator();
     }
 
     public void add(K key) {
         if(key != null) {
-            list.add(key);
+            original.add(key);
         }
     }
 
     public void addAll(CollectionAtom<K> keys) {
         if(keys != null) {
-            list.addAll(keys.getOriginal());
+            original.addAll(keys.getOriginal());
         }
     }
 
     public boolean contains(K key) {
-        return key != null && list.contains(key);
+        return key != null && original.contains(key);
     }
 
     public ListAtom<K> difference(ListAtom<K> setAtom) {
-        SetAtom<K> atom = SetAtom.create(list).difference(SetAtom.create(setAtom));
+        SetAtom<K> atom = SetAtom.create(original).difference(SetAtom.create(setAtom));
         return ListAtom.create(atom.getOriginal());
     }
 
     public boolean isEmpty() {
-        return list.isEmpty();
+        return original.isEmpty();
     }
 
     public Stream<K> stream() {
-        return list.stream();
+        return original.stream();
     }
 
     public int size() {
-        return list.size();
+        return original.size();
     }
 
     public void removeAll(ListAtom<K> removedSet) {
         if(removedSet != null) {
-            list.removeAll(removedSet.getOriginal());
+            original.removeAll(removedSet.getOriginal());
         }
     }
 
     public ListAtom<K> intersection(ListAtom<K> list2) {
-        SetAtom<K> atom = SetAtom.create(list).intersection(SetAtom.create(list2));
+        SetAtom<K> atom = SetAtom.create(original).intersection(SetAtom.create(list2));
         return ListAtom.create(atom.getOriginal());
     }
 
@@ -82,7 +82,7 @@ public class ListAtom<K> implements CollectionAtom<K> {
     }
 
     public K get(int i) {
-        return list.get(i);
+        return original.get(i);
     }
 
     public static <K> ListAtom<K> singletonList(K s) {
@@ -102,27 +102,27 @@ public class ListAtom<K> implements CollectionAtom<K> {
     }
 
     public ListAtom<K> reverse(){
-        return ListAtom.getAtom(Lists.reverse(list));
+        return ListAtom.getAtom(Lists.reverse(original));
     }
 
     public ListAtom<K> subList(int fromIndex, int toIndex) {
-        return ListAtom.getAtom(list.subList(fromIndex, toIndex));
+        return ListAtom.getAtom(original.subList(fromIndex, toIndex));
     }
 
     // Just boilerplate code for Atom
     @BoilerPlate
     private ListAtom() {
-        this.list = new ArrayList<>();
+        this.original = new ArrayList<>();
     }
 
     @BoilerPlate
     private ListAtom(int size) {
-        this.list = new ArrayList<>(size);
+        this.original = new ArrayList<>(size);
     }
 
     @BoilerPlate
-    private ListAtom(List<K> list) {
-        this.list = list;
+    private ListAtom(List<K> original) {
+        this.original = original;
     }
 
     @BoilerPlate
@@ -165,13 +165,13 @@ public class ListAtom<K> implements CollectionAtom<K> {
 
     @BoilerPlate
     public List<K> getOriginal() {
-        return list;
+        return original;
     }
 
     @BoilerPlate
     @Override
     public String toString() {
-        return list.stream().map(Object::toString).collect(getJoiningCollectors("\n\r"));
+        return original.stream().map(Object::toString).collect(getJoiningCollectors("\n\r"));
     }
 
 }

@@ -18,58 +18,58 @@ import java.util.stream.Stream;
  * <p>
  * Created by Slava Vedenin on 12/16/2016.
  */
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "unchecked", "unused"})
 @Atom({HashSet.class, Set.class, TreeSet.class, LinkedHashSet.class})
 @Isotopes({HashSet.class, TreeSet.class, LinkedHashSet.class})
 @Molecule({MultimapAtom.class, MultisetAtom.class})
 public class SetAtom<K> implements CollectionAtom<K> {
-    private final Set<K> set;
+    private final Set<K> original;
 
     @Override
     public Iterator<K> iterator() {
-        return set.iterator();
+        return original.iterator();
     }
 
     public void add(K key) {
         if (key != null) {
-            set.add(key);
+            original.add(key);
         }
     }
 
     public void addAll(CollectionAtom<K> keys) {
         if (keys != null) {
-            set.addAll(keys.getOriginal());
+            original.addAll(keys.getOriginal());
         }
     }
 
     public boolean contains(K key) {
-        return key != null && set.contains(key);
+        return key != null && original.contains(key);
     }
 
     public SetAtom<K> difference(SetAtom<K> setAtom) {
-        return getAtom(Sets.difference(set, setAtom.getOriginal()));
+        return getAtom(Sets.difference(original, setAtom.getOriginal()));
     }
 
     public boolean isEmpty() {
-        return set.isEmpty();
+        return original.isEmpty();
     }
 
     public Stream<K> stream() {
-        return set.stream();
+        return original.stream();
     }
 
     public int size() {
-        return set.size();
+        return original.size();
     }
 
     public void removeAll(SetAtom<K> removedSet) {
         if (removedSet != null) {
-            set.removeAll(removedSet.getOriginal());
+            original.removeAll(removedSet.getOriginal());
         }
     }
 
     public SetAtom<K> intersection(SetAtom<K> set2) {
-        return getAtom(Sets.intersection(set, set2.getOriginal()));
+        return getAtom(Sets.intersection(original, set2.getOriginal()));
     }
 
     public static <T> Collector<T, ?, SetAtom<T>> getCollector() {
@@ -103,28 +103,28 @@ public class SetAtom<K> implements CollectionAtom<K> {
     }
 
     public ListAtom<K> toList() {
-        return ListAtom.create(set);
+        return ListAtom.create(original);
     }
 
     // Just boilerplate code for Atom
     @BoilerPlate
     public SetAtom() {
-        this.set = new HashSet<>();
+        this.original = new HashSet<>();
     }
 
     @BoilerPlate
     public SetAtom(int size) {
-        this.set = new HashSet<>(size);
+        this.original = new HashSet<>(size);
     }
 
     @BoilerPlate
-    public SetAtom(Set<K> set) {
-        this.set = set;
+    public SetAtom(Set<K> original) {
+        this.original = original;
     }
 
     @BoilerPlate
-    public SetAtom(Collection<K> set) {
-        this.set = new HashSet<>(set);
+    public SetAtom(Collection<K> original) {
+        this.original = new HashSet<>(original);
     }
 
     @BoilerPlate
@@ -183,7 +183,7 @@ public class SetAtom<K> implements CollectionAtom<K> {
 
     @BoilerPlate
     public Set<K> getOriginal() {
-        return set;
+        return original;
     }
 
     @BoilerPlate
@@ -194,6 +194,6 @@ public class SetAtom<K> implements CollectionAtom<K> {
     @BoilerPlate
     @Override
     public String toString() {
-        return set.stream().map(Object::toString).collect(getJoiningCollectors(" , "));
+        return original.stream().map(Object::toString).collect(getJoiningCollectors(" , "));
     }
 }

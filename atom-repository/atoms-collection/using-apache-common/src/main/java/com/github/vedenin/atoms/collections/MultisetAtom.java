@@ -22,44 +22,44 @@ import java.util.stream.Stream;
 @Atom({HashMultiSet.class,MultiSet.class})
 @Molecule({SetAtom.class})
 public class MultisetAtom<K> implements CollectionAtom<K> {
-    private final MultiSet<K> set;
+    private final MultiSet<K> original;
 
     public void add(K key) {
-        set.add(key);
+        original.add(key);
     }
 
     public void add(K key, int cnt) {
-        set.add(key, cnt);
+        original.add(key, cnt);
     }
 
     public int count(K key) {
-        return set.getCount(key);
+        return original.getCount(key);
     }
 
     public boolean contains(K key) {
-        return set.contains(key);
+        return original.contains(key);
     }
 
     public int size() {
-        return set.size();
+        return original.size();
     }
 
     public SetAtom<K> elementSet() {
-        return SetAtom.getAtom(set.uniqueSet());
+        return SetAtom.getAtom(original.uniqueSet());
     }
 
     @Override
     public Iterator<K> iterator() {
-        return set.iterator();
+        return original.iterator();
     }
 
 
     public void addAll(CollectionAtom<K> setAtom) {
-        set.addAll(setAtom.getOriginal());
+        original.addAll(setAtom.getOriginal());
     }
 
     public Stream<Entry<K>> stream() {
-       return set.entrySet().stream().map(Entry::new);
+       return original.entrySet().stream().map(Entry::new);
     }
 
     public static class Entry<E> {
@@ -77,12 +77,20 @@ public class MultisetAtom<K> implements CollectionAtom<K> {
             return entry.getCount();
         }
 
+        @Override
         public boolean equals(Object o) {
-            return entry.equals(o);
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Entry<?> entry1 = (Entry<?>) o;
+
+            return entry != null ? entry.equals(entry1.entry) : entry1.entry == null;
+
         }
 
+        @Override
         public int hashCode() {
-            return entry.hashCode();
+            return entry != null ? entry.hashCode() : 0;
         }
 
         public String toString() {
@@ -101,12 +109,12 @@ public class MultisetAtom<K> implements CollectionAtom<K> {
     // Just boilerplate code for Atom
     @BoilerPlate
     private MultisetAtom() {
-        this.set = new HashMultiSet<>();
+        this.original = new HashMultiSet<>();
     }
 
     @BoilerPlate
-    private MultisetAtom(MultiSet<K> set) {
-        this.set = set;
+    private MultisetAtom(MultiSet<K> original) {
+        this.original = original;
     }
 
     @BoilerPlate
@@ -122,12 +130,12 @@ public class MultisetAtom<K> implements CollectionAtom<K> {
     @BoilerPlate
     @Override
     public MultiSet<K> getOriginal() {
-        return set;
+        return original;
     }
 
     @BoilerPlate
     @Override
     public String toString() {
-        return set.toString();
+        return original.toString();
     }
 }
