@@ -9,7 +9,7 @@
     <artifactId>atoms-io</artifactId>
     <packaging>jar</packaging>
 
-    <version>0.1-default-draft</version>
+    <version>0.11-default-draft</version>
     <name>IO [default]</name>
     <description>Project provide implementation of Atom pattern for io (File, Resource and so on)</description>
     <url>https://github.com/Vedenin/atom-pattern</url>
@@ -70,13 +70,13 @@
         <dependency>
             <groupId>com.github.vedenin.atoms</groupId>
             <artifactId>collections</artifactId>
-            <version>0.1-guava-draft</version>
+            <version>0.11-guava-draft</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.vedenin.atoms</groupId>
             <artifactId>atoms-strings</artifactId>
-            <version>0.1-default-draft</version>
+            <version>0.11-default-draft</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

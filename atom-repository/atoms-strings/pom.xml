@@ -8,7 +8,7 @@
     <packaging>pom</packaging>
     <groupId>com.github.vedenin.atoms</groupId>
     <artifactId>atoms-strings-root</artifactId>
-    <version>0.1-draft</version>
+    <version>0.11-draft</version>
     <name>Strings [root]</name>
 
     <url>https://github.com/Vedenin/atom-pattern</url>

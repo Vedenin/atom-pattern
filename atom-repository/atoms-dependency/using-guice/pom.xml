@@ -6,12 +6,12 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.vedenin.atoms</groupId>
-    <artifactId>atoms-htmlparser</artifactId>
+    <artifactId>atoms-dependency</artifactId>
     <packaging>jar</packaging>
 
-    <version>0.11-jsoup-draft</version>
-    <name>Html parser [jsoup]</name>
-    <description>Project provide implementation of Atom pattern for html parser using jsop</description>
+    <version>0.11-default-draft</version>
+    <name>IO [default]</name>
+    <description>Project provide implementation of Atom pattern for io (File, Resource and so on)</description>
     <url>https://github.com/Vedenin/atom-pattern</url>
 
     <parent>
@@ -56,22 +56,24 @@
 
     <dependencies>
         <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>4.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.github.vedenin.atoms</groupId>
             <artifactId>annotations</artifactId>
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.11.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.vedenin.atoms</groupId>
-            <artifactId>collections</artifactId>
-            <version>0.11-guava-draft</version>
-            <scope>provided</scope>
-        </dependency>
+
     </dependencies>
 
     <build>

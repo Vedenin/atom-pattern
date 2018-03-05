@@ -9,7 +9,7 @@
     <artifactId>collections</artifactId>
     <packaging>jar</packaging>
 
-    <version>0.1-guava-draft</version>
+    <version>0.11-guava-draft</version>
     <name>Collection [guava]</name>
     <description>Project provide implementation of Atom pattern for collection (Map, Set, List, MultiMap)</description>
     <url>https://github.com/Vedenin/atom-pattern</url>
