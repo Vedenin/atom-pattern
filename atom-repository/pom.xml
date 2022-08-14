@@ -58,11 +58,9 @@
 
   <modules>
     <module>atoms-collection</module>
-    <module>atoms-htmlparser</module>
     <module>atoms-io</module>
     <module>atoms-strings</module>
     <module>atoms-dependency</module>
-    <module>atoms-downloader</module>
     <module>atoms-xml</module>
     <module>atoms-restclient</module>
   </modules>
